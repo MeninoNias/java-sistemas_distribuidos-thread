@@ -1,7 +1,5 @@
 package questao01.controller;
 
-import javax.swing.*;
-
 public class homeThread implements Runnable{
 
     private final ControllerHome controller;
@@ -10,6 +8,7 @@ public class homeThread implements Runnable{
     public homeThread(ControllerHome controller, int i) {
         this.controller = controller;
         this.i = i;
+
     }
 
     @Override
