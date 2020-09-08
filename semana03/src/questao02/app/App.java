@@ -9,5 +9,4 @@ public class App {
         new Controller(new Home("Questão 2"));
     }
 
-
 }
