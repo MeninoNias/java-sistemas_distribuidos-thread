@@ -47,7 +47,7 @@ public class Controller implements ActionListener {
                     int intervaloFim = 0;
                     int resto = numeroIntervalo%numeroThreads;
                     List<Thread> threads = new ArrayList<>();
-
+                    //Divide em intervalos e adiciona o resto no ultimo, se tiver resto.
                     while (k <= numeroThreads){
 
                         if(k==numeroThreads){
@@ -59,7 +59,7 @@ public class Controller implements ActionListener {
                             intervaloFim += intervaloThread;
                             intervalorInicio = (intervaloFim - intervaloThread);
                         }
-
+                        //Inicia e adiciona as threads em um vetor
                         ThreadPrimo threadPrimo = new ThreadPrimo(this, intervalorInicio, intervaloFim, "Thread -> "+k);
                         Thread thread = new Thread(threadPrimo);
                         thread.start();
@@ -67,7 +67,7 @@ public class Controller implements ActionListener {
 
                         k++;
                     }
-
+                    //Espera ate que todas tenha terminado o processamento;
                     for(Thread t: threads){
                         try {
                             t.join();

@@ -30,6 +30,7 @@ public class ThreadPrimo implements Runnable{
         }
     }
 
+    //VERIFICA SE É NUMERO PRIMO
     private static boolean isPrimo(int numero){
         for(int j = 2; j < numero; j++){
             if(numero % j == 0){
