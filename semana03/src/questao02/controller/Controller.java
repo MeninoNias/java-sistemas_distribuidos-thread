@@ -6,21 +6,22 @@ import questao02.view.Home;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class Controller implements ActionListener, Runnable {
+public class Controller implements ActionListener {
 
     private Home home;
-    private List primos = new ArrayList();;
 
     private int intervaloThread;
 
-    private int numeroTheads;
+    private ArrayList<Primo> primos;
+
+    private int numeroThreads;
     private int numeroIntervalo;
 
     public Controller(Home home) {
         this.home = home;
+        this.primos = new ArrayList<>();
         control();
     }
 
@@ -34,22 +35,80 @@ public class Controller implements ActionListener, Runnable {
             if(!home.getTextField().getText().isEmpty() && !home.getThreadField().getText().isEmpty()){
                 if(util.intValidation(home.getTextField().getText())
                         && util.intValidation(home.getThreadField().getText())){
-
                     disableItens();
 
-                    numeroTheads = Integer.parseInt(home.getThreadField().getText());
+                    numeroThreads = Integer.parseInt(home.getThreadField().getText());
                     numeroIntervalo = Integer.parseInt(home.getTextField().getText());
-                    System.out.println("Intervalo: "+numeroIntervalo);
 
-                    intervaloThread = numeroIntervalo/numeroTheads;
-                    System.out.println("Intervalor / NºThread: "+intervaloThread);
+                    intervaloThread = numeroIntervalo/numeroThreads;
 
-                    Thread thread1 = new Thread(this);
-                    thread1.start();
+                    int k = 1;
+                    int intervalorInicio = 0;
+                    int intervaloFim = 0;
+                    int resto = numeroIntervalo%numeroThreads;
+                    List<Thread> threads = new ArrayList<>();
+
+                    while (k <= numeroThreads){
+
+                        if(k==numeroThreads){
+                            intervaloFim += (intervaloThread+resto);
+                            intervalorInicio = (intervaloFim - intervaloThread);
+                            System.out.println(intervaloFim);
+                        }
+                        else{
+                            intervaloFim += intervaloThread;
+                            intervalorInicio = (intervaloFim - intervaloThread);
+                        }
+
+                        ThreadPrimo threadPrimo = new ThreadPrimo(this, intervalorInicio, intervaloFim, "Thread -> "+k);
+                        Thread thread = new Thread(threadPrimo);
+                        thread.start();
+                        threads.add(thread);
+
+                        k++;
+                    }
+
+                    for(Thread t: threads){
+                        try {
+                            t.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    imprimirResultados();
+                    clearField();
+                    enableItens();
 
                 }
             }
         }
+    }
+
+    class SortbPrimo implements Comparator<Primo>{
+
+        public int compare(Primo a, Primo b)
+        {
+            return a.getNumero() - b.getNumero();
+        }
+    }
+
+
+    public void imprimirResultados(){
+        primos.sort(new SortbPrimo());
+
+        System.out.println("============================");
+        for (Primo p: primos){
+            System.out.println(p);
+        }
+        System.out.println("============================");
+
+        primos.removeAll(primos);
+        primos.clear();
+    }
+
+    public ArrayList<Primo> getPrimos() {
+        return primos;
     }
 
     public void clearField(){
@@ -66,51 +125,5 @@ public class Controller implements ActionListener, Runnable {
         home.getjButton().setEnabled(false);
         home.getTextField().setEnabled(false);
         home.getThreadField().setEnabled(false);
-    }
-
-    public List getPrimos() { return primos; }
-
-    @Override
-    public void run() {
-        int i = 1;
-
-        List<Integer> intervalo;
-        intervalo = new ArrayList<>();
-
-        synchronized (this){
-            for(int j = 1; j <= numeroIntervalo ; j++){
-
-                if (intervalo.size() < intervaloThread){
-                    intervalo.add(j);
-                    System.out.println(intervalo.size()+" - "+intervaloThread+" -> "+j);
-                }
-
-                else{
-                    ThreadPrimo primo = new ThreadPrimo(this, intervalo, "Thread"+i);
-                    Thread thread = new Thread(primo); thread.start();
-                    intervalo.removeAll(intervalo);
-                    intervalo.clear();
-                    intervalo.add(j);
-                    System.out.println(intervalo.size()+" - "+intervaloThread+" -> "+j);
-                    i++;
-                }
-            }
-
-            ThreadPrimo primo = new ThreadPrimo(this, intervalo, "Thread"+i);
-            Thread thread = new Thread(primo); thread.start();
-            intervalo.removeAll(intervalo);
-            intervalo.clear();
-        }
-
-        primos.forEach(System.out::println);
-
-        System.out.println("TERMINOU");
-
-        primos.removeAll(primos);
-        primos.clear();
-
-        clearField();
-        enableItens();
-
     }
 }

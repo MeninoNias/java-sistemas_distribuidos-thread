@@ -10,19 +10,19 @@ public class ThreadPrimo implements Runnable{
 
     private Controller controller;
     private String nome;
-    private List<Integer> intervalo;
 
-    public ThreadPrimo( Controller controller, List<Integer> intervalo, String nome) {
+    private int inicio, fim;
+
+    public ThreadPrimo( Controller controller, int inicio, int fim, String nome) {
         this.controller = controller;
-        this.intervalo = new ArrayList<>(intervalo);
         this.nome = nome;
+        this.inicio = inicio;
+        this.fim = fim;
     }
 
     @Override
     public void run() {
-        System.out.println(intervalo.get(0));
-        System.out.println(intervalo.size());
-        for(int i: intervalo){
+        for(int i = inicio; i <= fim; i++){
             Primo primo = new Primo(i, this.nome);
             if(isPrimo(primo.getNumero())){
                 controller.getPrimos().add(primo);
