@@ -10,7 +10,7 @@ public class Home extends JFrame {
     private JLabel labelNumero;
     private JTextField fieldNumero;
 
-    private JButton buttonConformar;
+    private JButton buttonConfirmar;
 
     public Home(String title){
         super(title);
@@ -23,7 +23,7 @@ public class Home extends JFrame {
         labelNumero = new JLabel("Nº: "); add(labelNumero);
         fieldNumero = new JTextField(10); add(fieldNumero);
 
-        buttonConformar = new JButton("Confirmar"); add(buttonConformar);
+        buttonConfirmar = new JButton("Confirmar"); add(buttonConfirmar);
 
         setLocationRelativeTo(null);
         setResizable(false);
@@ -48,8 +48,8 @@ public class Home extends JFrame {
         return fieldNumero;
     }
 
-    public JButton getButtonConformar() {
-        return buttonConformar;
+    public JButton getButtonConfirmar() {
+        return buttonConfirmar;
     }
 
 }

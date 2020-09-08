@@ -1,0 +1,4 @@
+03.1 - As saidas se misturam por não estarem sincronizadas assim nao tem o controle na hora da impressão
+
+03.2 - Em pequenas quantidades as threads conseguem imprimir de forma ordenada, mas quando o numero de
+threads e contator é elevado elas começarm a imprimir de forma bagunçada
