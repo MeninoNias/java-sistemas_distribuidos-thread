@@ -2,22 +2,31 @@ package src.questao03.controller;
 
 public class ContadorGlobal extends Thread{
 
-    private Controller controller;
+    private static Controller controller;
+    private static final Object lock = new Object();
 
     public ContadorGlobal(String name, Controller controller) {
         super(name);
-        this.controller = controller;
+        ContadorGlobal.controller = controller;
     }
 
     @Override
     public void run() {
-        super.run();
+
         while (controller.getGlobalContador()<controller.getNumeroMax()){
-            if(controller.getGlobalContador()<= controller.getNumeroMax()){
-                int temp = controller.getGlobalContador()+1;
+            increment();
+        }
+
+    }
+
+     void increment(){
+        synchronized (lock){
+            if(controller.getGlobalContador()< controller.getNumeroMax()){
+                Integer temp = controller.getGlobalContador()+1;
                 controller.setGlobalContador(temp);
-                System.out.println(temp+" ->"+getName());
+                System.out.println(temp+" ->"+currentThread().getName());
             }
         }
     }
+
 }

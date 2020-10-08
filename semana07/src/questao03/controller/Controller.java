@@ -12,10 +12,10 @@ public class Controller implements ActionListener {
 
     private Home home;
 
-    private int numeroThreads;
-    private int numeroMax;
+    private Integer numeroThreads;
+    private  Integer numeroMax;
 
-    private int globalContador = 0;
+    private static Integer globalContador = 0;
 
     public Controller(Home home) {
         this.home = home;
@@ -48,22 +48,22 @@ public class Controller implements ActionListener {
                     System.out.println("=====================================================");
 
                     //Onde se inicicia os contadores com os valores não globais
-                    for(int i = 1; i <= numeroThreads; i++){
 
-                        ContadorThread thread = new ContadorThread("Thread"+i, numeroMax);
-                        thread.start();
-                        threads.add(thread);
-
-
-                    }
-
-                    for (ContadorThread t: threads){
-                        try {
-                            t.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+//                    for(int i = 1; i <= numeroThreads; i++){
+//
+//                        ContadorThread thread = new ContadorThread("Thread"+i, numeroMax);
+//                        thread.start();
+//                        threads.add(thread);
+//
+//                    }
+//
+//                    for (ContadorThread t: threads){
+//                        try {
+//                            t.join();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
                     System.out.println("=====================================================");
                     System.out.println("03.2");
@@ -71,10 +71,8 @@ public class Controller implements ActionListener {
 
                     List<ContadorGlobal> threadsGlobal = new ArrayList<>();
 
-                    //Onde se inicia os contadores globais
+//                  Onde se inicia os contadores globais
                     for(int j = 1; j <= numeroThreads; j++){
-
-
                         ContadorGlobal thread = new ContadorGlobal("Thread"+j, this);
                         thread.start();
                         threadsGlobal.add(thread);
@@ -96,16 +94,16 @@ public class Controller implements ActionListener {
         }
     }
 
-    public int getNumeroMax() {
+    public  int getNumeroMax() {
         return numeroMax;
     }
 
-    public int getGlobalContador() {
+    public  Integer getGlobalContador() {
         return globalContador;
     }
 
-    public void setGlobalContador(int globalContador) {
-        this.globalContador = globalContador;
+    public  void setGlobalContador(Integer globalContador) {
+        Controller.globalContador = globalContador;
     }
 
     public void clearField(){
