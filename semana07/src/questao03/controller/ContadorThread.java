@@ -3,6 +3,8 @@ package src.questao03.controller;
 public class ContadorThread extends Thread {
 
     private static Integer max;
+    private static final Object lock = new Object();
+
 
     public ContadorThread(String name, Integer max) {
         super(name);
@@ -19,9 +21,11 @@ public class ContadorThread extends Thread {
 
     }
 
-    synchronized void imprimeTeste(Integer i){
+     void imprimeTeste(Integer i){
 
-        System.out.println(i + " " + this.getName());
+        synchronized (lock){
+            System.out.println(i + " " + this.getName());
+        }
 
     }
 

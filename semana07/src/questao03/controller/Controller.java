@@ -49,42 +49,42 @@ public class Controller implements ActionListener {
 
                     //Onde se inicicia os contadores com os valores não globais
 
-//                    for(int i = 1; i <= numeroThreads; i++){
-//
-//                        ContadorThread thread = new ContadorThread("Thread"+i, numeroMax);
-//                        thread.start();
-//                        threads.add(thread);
-//
-//                    }
-//
-//                    for (ContadorThread t: threads){
-//                        try {
-//                            t.join();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
+                    for(int i = 1; i <= numeroThreads; i++){
 
-                    System.out.println("=====================================================");
-                    System.out.println("03.2");
-                    System.out.println("=====================================================");
-
-                    List<ContadorGlobal> threadsGlobal = new ArrayList<>();
-
-//                  Onde se inicia os contadores globais
-                    for(int j = 1; j <= numeroThreads; j++){
-                        ContadorGlobal thread = new ContadorGlobal("Thread"+j, this);
+                        ContadorThread thread = new ContadorThread("Thread"+i, numeroMax);
                         thread.start();
-                        threadsGlobal.add(thread);
+                        threads.add(thread);
+
                     }
 
-                    for (ContadorGlobal t: threadsGlobal){
+                    for (ContadorThread t: threads){
                         try {
                             t.join();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
+
+//                    System.out.println("=====================================================");
+//                    System.out.println("03.2");
+//                    System.out.println("=====================================================");
+//
+//                    List<ContadorGlobal> threadsGlobal = new ArrayList<>();
+//
+////                  Onde se inicia os contadores globais
+//                    for(int j = 1; j <= numeroThreads; j++){
+//                        ContadorGlobal thread = new ContadorGlobal("Thread"+j, this);
+//                        thread.start();
+//                        threadsGlobal.add(thread);
+//                    }
+//
+//                    for (ContadorGlobal t: threadsGlobal){
+//                        try {
+//                            t.join();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
                     this.setGlobalContador(0);
                     clearField();
