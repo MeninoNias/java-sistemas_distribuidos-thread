@@ -12,10 +12,12 @@ public class Controller implements ActionListener {
 
     private Home home;
 
-    private int numeroThreads;
-    private int numeroMax;
+    private Integer numeroThreads;
+    private Integer numeroMax;
 
     private boolean interrup;
+
+    private List<ContadorThread> threads;
 
     public Controller(Home home) {
         this.home = home;
@@ -44,14 +46,14 @@ public class Controller implements ActionListener {
                     numeroThreads = Integer.parseInt(home.getFieldThreads().getText());
                     numeroMax = Integer.parseInt(home.getFieldNumero().getText());
 
-                    List<ContadorThread> threads = new ArrayList<>();
+                    threads = new ArrayList<>();
 
                     System.out.println("=====================================================");
                     System.out.println("04.1");
                     System.out.println("=====================================================");
 
                     //Onde se inicicia os contadores com os valores não globais
-                    for(int i = 1; i <= numeroThreads; i++){
+                    for(Integer i = 1; i <= numeroThreads; i++){
 
                         ContadorThread thread = new ContadorThread("Thread"+i, numeroMax, this);
                         thread.start();
@@ -72,6 +74,10 @@ public class Controller implements ActionListener {
                 }
             }
         }
+    }
+
+    public List<ContadorThread> getThreads() {
+        return threads;
     }
 
     public int getNumeroMax() {
