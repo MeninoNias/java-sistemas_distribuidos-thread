@@ -1,0 +1,11 @@
+package src.questao03.app;
+
+import src.questao03.controller.Controller;
+import src.questao03.view.Home;
+
+public class App {
+
+    public static void main(String[] args) {
+        new Controller(new Home("QUESTÃO 03"));
+    }
+}
