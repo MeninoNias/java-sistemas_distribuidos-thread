@@ -6,6 +6,7 @@ public class ContadorThread extends Thread {
     private final Controller controller;
 
     private static final Object lock = new Object();
+    private boolean imprimindo = true;
 
     public ContadorThread(String name, Integer max, Controller controller) {
         super(name);
@@ -15,25 +16,59 @@ public class ContadorThread extends Thread {
 
     @Override
     public void run() {
-        for(Integer i = 0; i <= max; i++){
-            if(!controller.isInterrup()){
-                for(Thread t: controller.getThreads()){
-                    t.interrupt();
-                }
-                break;
-            }
-            if(i>=max){
-                controller.setInterrup(false);
-            }
-            imprime(i);
-        }
+       int i = 0;
+       while (i <= max){
+
+           if(!controller.isInterrup()){
+               currentThread().interrupt();
+               break;
+           }
+
+           try {
+               imprimindo = true;
+               i = estaImprimindo(i);
+               sleep(1);
+           } catch (InterruptedException e) {
+               Thread.currentThread().interrupt();
+           }
+
+
+
+
+
+
+
+       }
     }
 
-    void imprime(Integer i){
-        synchronized (lock){
-            System.out.println( i + " -> "+currentThread().getName());
+
+
+    private synchronized Integer estaImprimindo(Integer i) {
+
+        if(i==max){
+            controller.setInterrup(false);
         }
+
+        if (imprimindo) {
+            imprimindo = false;
+            notifyAll();
+            System.out.println(i + " " + currentThread().getName());
+            i++;
+            return i;
+        }
+
+        while (!imprimindo) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return i;
+
     }
+
 
 }
 
