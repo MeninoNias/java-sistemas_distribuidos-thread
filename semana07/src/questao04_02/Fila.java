@@ -2,7 +2,7 @@ package src.questao04_02;
 
 public class Fila{
 
-    private boolean inserindo = true;
+    private boolean inserindo;
 
     private int inicio;
     private int fim;
@@ -19,21 +19,14 @@ public class Fila{
     }
 
     public boolean isVazia(){
-        if (qtdeElementos == 0){
-            return true;
-        }
-        return false;
+        return qtdeElementos == 0;
     }
 
     public boolean isCheia(){
-        if (qtdeElementos == tamanho - 1){
-            return true;
-        }
-        return false;
+        return qtdeElementos == tamanho - 1;
     }
 
-    public void adicionar(int e){
-        inserindo = false;
+    public boolean adicionar(Integer e){
         if (!isCheia()){
             if (inicio == -1){
                 inicio = 0;
@@ -41,20 +34,21 @@ public class Fila{
             fim++;
             f[fim] = e;
             qtdeElementos++;
+            return true;
         }
-        inserindo = true;
+        return false;
     }
 
-    public void remover(){
-        inserindo = false;
+    public boolean remover(){
         if (!isVazia()){
             for(int i = 0; i < (tamanho-1); i++){
                 f[i] = f[i+1];
             }
             fim--;
             qtdeElementos--;
+            return true;
         }
-        inserindo = true;
+        return false;
     }
 
 
@@ -73,6 +67,10 @@ public class Fila{
 
     public boolean isInserindo() {
         return inserindo;
+    }
+
+    public void setInserindo(boolean inserindo) {
+        this.inserindo = inserindo;
     }
 }
 
