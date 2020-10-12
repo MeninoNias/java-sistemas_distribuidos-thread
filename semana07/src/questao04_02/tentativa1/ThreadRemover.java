@@ -1,4 +1,4 @@
-package src.questao04_02;
+package src.questao04_02.tentativa1;
 
 public class ThreadRemover extends Thread{
 

@@ -1,4 +1,4 @@
-package src.questao04_02;
+package src.questao04_02.tentativa1;
 
 public class Fila{
 
@@ -17,6 +17,7 @@ public class Fila{
         f = new int[tamanho];
         qtdeElementos = 0;
     }
+
 
     public boolean isVazia(){
         return qtdeElementos == 0;
